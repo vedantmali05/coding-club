@@ -32,6 +32,11 @@ const TaskTimeline: React.FC = () => {
   useEffect(() => {
     const tasks = getFromLocalStorage(STORAGE_KEYS.timelineTasks) || [];
     const users = getFromLocalStorage(STORAGE_KEYS.users) || [];
+
+    if (!users || users.length === 0) {
+      window.location.href = '/';
+    }
+
     setAllTasks(tasks);
     setAllUsers(users);
     setIsClient(true);
@@ -50,12 +55,12 @@ const TaskTimeline: React.FC = () => {
 
   useEffect(() => {
     if (isAddTaskDialogOpen) {
-        if (taskTitleRef.current) taskTitleRef.current.value = editingTask?.title || '';
-        if (taskDescriptionRef.current) taskDescriptionRef.current.value = editingTask?.description || '';
-        if (taskStartDateRef.current) taskStartDateRef.current.value = editingTask?.startDate || '';
-        if (taskEndDateRef.current) taskEndDateRef.current.value = editingTask?.endDate || '';
-        if (taskAssignedByRef.current) taskAssignedByRef.current.value = editingTask?.assignedBy || '';
-        if (taskAssignedToRef.current) taskAssignedToRef.current.value = editingTask?.assignedTo || '';
+      if (taskTitleRef.current) taskTitleRef.current.value = editingTask?.title || '';
+      if (taskDescriptionRef.current) taskDescriptionRef.current.value = editingTask?.description || '';
+      if (taskStartDateRef.current) taskStartDateRef.current.value = editingTask?.startDate || '';
+      if (taskEndDateRef.current) taskEndDateRef.current.value = editingTask?.endDate || '';
+      if (taskAssignedByRef.current) taskAssignedByRef.current.value = editingTask?.assignedBy || '';
+      if (taskAssignedToRef.current) taskAssignedToRef.current.value = editingTask?.assignedTo || '';
     }
   }, [isAddTaskDialogOpen, editingTask]);
 

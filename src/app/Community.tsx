@@ -6,6 +6,7 @@ import { getFromLocalStorage, saveToLocalStorage } from "../utils/browserStorage
 import { STORAGE_KEYS, CLASSES, USER_DOMAINS, USER_POSITIONS } from "../utils/constants";
 import Dialog from "../components/Dialog";
 import Header from "../components/Header";
+import { useRouter } from "next/router";
 
 // Types
 interface User {
@@ -58,6 +59,7 @@ const groupUsers = (users: User[]): GroupedUsers => {
 };
 
 const Community: React.FC = () => {
+
   const [users, setUsers] = useState<User[]>([]);
   const [groupedUsers, setGroupedUsers] = useState<GroupedUsers | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -67,6 +69,11 @@ const Community: React.FC = () => {
 
   useEffect(() => {
     const storedUsers: User[] = getFromLocalStorage(STORAGE_KEYS.users) || [];
+
+    if (!storedUsers || storedUsers.length === 0) {
+      window.location.href = '/';
+    }
+
     setUsers(storedUsers);
     setGroupedUsers(groupUsers(storedUsers));
     setIsClient(true);

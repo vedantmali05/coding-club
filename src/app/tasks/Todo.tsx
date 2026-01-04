@@ -64,9 +64,14 @@ const Todo: React.FC<TodoProps> = ({
                 setTodos(initialTodos);
             }
         }
-        
+
         try {
             const savedUsers = getFromLocalStorage(STORAGE_KEYS.users) || [];
+
+            if (!savedUsers || savedUsers.length === 0) {
+                window.location.href = '/';
+            }
+
             setUsers(savedUsers);
         } catch (e) {
             console.error('Failed to load users from localStorage:', e);
